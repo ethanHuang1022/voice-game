@@ -50,8 +50,6 @@ const g = cv.getContext('2d');
 const W = cv.width, H = cv.height;
 const GROUND = 30, PIPE_W = 70, BIRD_X = 160, BIRD_R = 20;
 const HEAD_H = 56; // 頭像顯示高度
-const head = new Image();
-head.src = 'img/player-head.svg';
 const $ = (id) => document.getElementById(id);
 
 let state = 'idle';       // idle | calib | play | over
@@ -186,10 +184,7 @@ function drawBird() {
     g.beginPath(); g.ellipse(side * 10, 0, 13, 7, 0, 0, Math.PI * 2); g.fill(); g.stroke();
     g.restore();
   }
-  if (head.complete && head.naturalWidth) {
-    const w = HEAD_H * head.naturalWidth / head.naturalHeight;
-    g.drawImage(head, -w / 2, -HEAD_H / 2 - 4, w, HEAD_H);
-  } else {
+  if (!drawHead(g, 0, -4, HEAD_H)) {
     // 頭像載入失敗時用原本的小黃鳥
     g.fillStyle = '#ffd43b';
     g.beginPath(); g.arc(0, 0, BIRD_R, 0, Math.PI * 2); g.fill();

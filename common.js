@@ -134,8 +134,10 @@ function showError(el, msg) {
 }
 
 // 玩家頭像（各遊戲共用）
+// 本機若有 img/avatar-local.svg（不會上傳到 GitHub）就優先使用，沒有就用 Q 版 Cody
 const headImg = new Image();
-headImg.src = 'img/player-head.svg';
+headImg.onerror = () => { headImg.onerror = null; headImg.src = 'img/player-head.svg'; };
+headImg.src = 'img/avatar-local.svg';
 
 // 以 (cx, cy) 為中心畫出高度 h 的頭像；圖片還沒載入時回傳 false，讓呼叫端畫備用圖形
 function drawHead(g, cx, cy, h, squashY = 1) {
